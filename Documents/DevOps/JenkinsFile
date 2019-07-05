@@ -3,22 +3,27 @@
 
 pipeline {
     agent any
+    environment {
+      SBT_HOME = tool name: 'sbt.1.5', type: 'org.jvnet.hudson.plugins.SbtPluginBuilder$SbtInstallation'
+      PATH = "${env.SBT_HOME}/bin:${env.PATH}"
+    }
 
     stages {
 
        stage('Build') {
+      
 			steps {
 				echo "Compiling..."
-				
-                sh "/usr/local/bin/sbt compile"
-
+				sh "${tool name: 'sbt', type:'org.jvnet.hudson.plugins.SbtPluginBuilder$SbtInstallation'}/bin/sbt compile"
 			}
-}
+			}
+
 
 stage('Unit Test') {
   steps {
      echo "Testing..."
-    sh "/usr/local/bin/sbt test"
+     sh "${tool name: 'sbt', type: 'org.jvnet.hudson.plugins.SbtPluginBuilder$SbtInstallation'}/bin/sbt test"
+     sh "${tool name: 'sbt', type: 'org.jvnet.hudson.plugins.SbtPluginBuilder$SbtInstallation'}/bin/sbt scalastyle"
    }
  }
 

@@ -3,6 +3,9 @@ version := "1.0"
 scalaVersion := "2.10.5"
 
 val sparkVersion = "1.4.1"
+import com.typesafe.sbt.packager.archetypes.JavaAppPackaging 
+//enablePlugins(JavaAppPackaging) 
+enablePlugins(JavaServerAppPackaging) 
 
 // Note the dependencies are provided
 libraryDependencies += "org.apache.spark" %% "spark-core" % sparkVersion % "provided"
